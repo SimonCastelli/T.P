@@ -57,6 +57,7 @@ public class GenerarAgenda {
                 if(!mail.isEmpty()){
                     raf.writeUTF(mail);
                 }else{raf.writeUTF("");}
+                raf.writeUTF("hola");
             }
         raf.close();
     }
