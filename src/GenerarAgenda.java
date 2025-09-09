@@ -60,6 +60,7 @@ public class GenerarAgenda {
                 raf.writeUTF("hola");
                 raf.writeUTF("Prueba");
             }
+            raf.writeUTF(" hola");
         raf.close();
     }
 }
