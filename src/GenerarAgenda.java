@@ -3,6 +3,8 @@ package org.example;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class GenerarAgenda {
@@ -20,7 +22,16 @@ public class GenerarAgenda {
 
             String fecha = LocalDate.now().toString();
 
-            int cantCampos = 4;
+        System.out.print("Cantidad de campos: ");
+        int cantCampos = Integer.parseInt(in.nextLine().trim());
+
+        List<String> nombresCampos = new ArrayList<>();
+        for (int i = 1; i <= cantCampos; i++) {
+            System.out.print("Nombre del campo #" + i + ": ");
+            String campo = in.nextLine().trim();
+            if (campo.isEmpty()) campo = "Campo" + i;
+            nombresCampos.add(campo);
+        }
 
             System.out.print("Cantidad de registros (contactos): ");
             int n = Integer.parseInt(in.nextLine().trim());
@@ -29,38 +40,22 @@ public class GenerarAgenda {
             raf.writeUTF(full);
             raf.writeUTF(fecha);
             raf.writeInt(cantCampos);
-            raf.writeInt(n);
 
-            for (int i = 1; i <= n; i++) {
-                System.out.println("\n== Contacto #" + i + " ==");
-                System.out.print("Nombre: ");
-                String nombre = in.nextLine().trim();
+        for (String campo : nombresCampos) {
+            raf.writeUTF(campo);
+        }
 
-                System.out.print("Telefono (enter para vacío): ");
-                String tel = in.nextLine().trim();
+        raf.writeInt(n);
 
-                System.out.print("Direccion (enter para vacío): ");
-                String dir = in.nextLine().trim();
-
-                System.out.print("EMail (enter para vacío): ");
-                String mail = in.nextLine().trim();
-
-                if(!nombre.isEmpty()) {
-                    raf.writeUTF(nombre);
-                }else{raf.writeUTF("");}
-                if(!tel.isEmpty()) {
-                    raf.writeUTF(tel);
-                }else{raf.writeUTF("");}
-                if(!dir.isEmpty()){
-                    raf.writeUTF(dir);
-                }else{raf.writeUTF("");}
-                if(!mail.isEmpty()){
-                    raf.writeUTF(mail);
-                }else{raf.writeUTF("");}
+        // === Registros ===
+        for (int i = 1; i <= n; i++) {
+            System.out.println("\n== Contacto #" + i + " ==");
+            for (String campo : nombresCampos) {
+                System.out.print(campo + " (enter para vacío): ");
+                String valor = in.nextLine().trim();
+                raf.writeUTF(valor);
             }
-            raf.writeUTF(" hola");
-            raf.writeUTF("Prueba");
-
+        }
         raf.close();
     }
 }
