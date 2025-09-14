@@ -15,18 +15,18 @@ public class MostrarAgenda {
         String fullFilename, fecha;
 
         // === 1) LEER Y MOSTRAR ===
-        try(RandomAccessFile raf = new RandomAccessFile(ruta, "r");) {
+        try(RandomAccessFile raf = new RandomAccessFile(ruta, "r")) {
 
             serie = raf.readInt();
-            fullFilename = raf.readUTF();
-            fecha = raf.readUTF();
-            cantCampos = raf.readInt();
+            fullFilename = ArchivoUtil.leerString(raf);
+            fecha = String.valueOf(ArchivoUtil.leerDate(raf));
+            cantCampos = ArchivoUtil.leerByte(raf);
             List<String> nombresCampos = new ArrayList<>();
             for(int i=0; i < cantCampos; i++){
-                nombresCampos.add(raf.readUTF());
+                nombresCampos.add(ArchivoUtil.leerString(raf));
             }
 
-            cantReg = raf.readInt();
+            cantReg = ArchivoUtil.leerByte(raf);
 
             System.out.println("Nro. de serie: " + serie);
             System.out.println("Full filename: " + fullFilename);
@@ -36,14 +36,14 @@ public class MostrarAgenda {
             for(int i = 0; i < cantCampos; i++) {
                 System.out.print(nombresCampos.get(i) + " ");
             }
-                System.out.println("");
+            System.out.println("");
             System.out.println("Cantidad de Registros (contactos): " + cantReg);
 
             for (int i = 0; i < cantReg; i++) {
                 System.out.println("\n--------------------");
                 System.out.println("Registro #" + (i+1));
                 for (int k = 0; k < cantCampos; k++){
-                    String valor = raf.readUTF();
+                    String valor = ArchivoUtil.leerString(raf);
                     if(!valor.isEmpty()){
                         System.out.println(nombresCampos.get(k) + ": " + valor);
                     }
