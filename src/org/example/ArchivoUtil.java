@@ -8,11 +8,11 @@ public class ArchivoUtil {
 
     // --- MÉTODOS DE ESCRITURA ---
 
-    public static void escribirInt(int v, RandomAccessFile raf) throws IOException {
+    public static void escribirShort(int v, RandomAccessFile raf) throws IOException {
         raf.writeShort(v);
     }
 
-    public static void writeByte(int v, RandomAccessFile raf) throws IOException {
+    public static void escribirByte(int v, RandomAccessFile raf) throws IOException {
         raf.writeByte(v);
     }
 
@@ -44,8 +44,8 @@ public class ArchivoUtil {
 
     // --- MÉTODOS DE LECTURA ---
 
-    public static int leerShort(RandomAccessFile raf) throws IOException {
-        return raf.readShort();
+    public static int leerUnsignedShort(RandomAccessFile raf) throws IOException {
+        return raf.readUnsignedShort();
     }
 
     public static int leerByte(RandomAccessFile raf) throws IOException {
